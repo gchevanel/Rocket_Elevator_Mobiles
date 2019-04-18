@@ -15,6 +15,9 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      sizelogout: { height: 0, width: 0 },
+      stylelog: "",
+      hidebutton: "",
       buttonColor: "red",
       title: "change status to Active",
       data: null,
@@ -44,10 +47,15 @@ export default class App extends React.Component {
         })
       }
     );
-    console.log("response Status", status);
   };
   onButtonPress = () => {
-    this.setState({ buttonColor: "#008000", title: "Status is now Active" });
+    this.setState({
+      sizelogout: { height: 20, width: 275, marginTop: 20 },
+
+      hidebutton: "LOG OUT",
+      buttonColor: "#008000",
+      title: "Status is now Active"
+    });
   };
   render() {
     return (
@@ -65,6 +73,8 @@ export default class App extends React.Component {
             title={this.state.title}
             onPress={() => this.PUTData()}
             color={this.state.buttonColor}
+            onValueChange={value => this.setState({ isHidden: value })}
+            value={this.state.isHidden}
           />
         </View>
         <View style={{ width: 275, marginTop: 20 }}>
@@ -74,11 +84,10 @@ export default class App extends React.Component {
             onPress={() => this.props.navigation.navigate("Elevator")}
           />
         </View>
-        <View style={{ width: 275, marginTop: 20 }}>
+
+        <View style={this.state.sizelogout}>
           <Button
-            style={styles.ButtonRedirect}
-            title="Log Out
-            "
+            title={this.state.hidebutton}
             onPress={() => this.props.navigation.navigate("Main")}
           />
         </View>

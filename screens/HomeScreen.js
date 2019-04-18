@@ -55,12 +55,9 @@ export default class App extends Component {
           placeholder={"email"}
           style={styles.input}
         />
-
-        <Button
-          title={"Login"}
-          style={styles.input}
-          onPress={this.onLogin.bind(this)}
-        />
+        <View style={styles.logincolor}>
+          <Button title={"Login"} onPress={this.onLogin.bind(this)} />
+        </View>
       </View>
     );
   }
@@ -73,12 +70,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ecf0f1"
   },
+  logincolor: {
+    color: "red"
+  },
   input: {
     width: 200,
     height: 44,
     padding: 10,
     borderWidth: 1,
     borderColor: "black",
+    color: "#0B64A0",
     marginBottom: 10
   }
 });

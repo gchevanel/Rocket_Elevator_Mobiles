@@ -67,7 +67,7 @@ export default class App extends React.Component {
             />
           </View>
 
-          {!this.state.loaded && <Text>LOADING</Text>}
+          {!this.state.loaded && <Text />}
           <Text style={styles.txt}>Elevator Not Active!</Text>
           {this.state.error && (
             <Text style={styles.err}>{this.state.error}</Text>
