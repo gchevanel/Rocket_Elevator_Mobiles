@@ -1,0 +1,84 @@
+import React, { Component } from "react";
+import {
+  Image,
+  Alert,
+  Button,
+  TextInput,
+  View,
+  StyleSheet
+} from "react-native";
+
+export default class App extends Component {
+  state = {
+    email: ""
+  };
+
+  onLogin = async () => {
+    // const { navigate } = this.props.navigation;
+    const email = this.state.email;
+    const { navigation } = this.props;
+
+    const response = await fetch(
+      "https://rocketelevatorsgab.azurewebsites.net/api/administrator/",
+      {
+        credentials: "include",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email
+        })
+      }
+    );
+    if (response.status === 200) {
+      navigation.navigate("Elevator");
+    }
+    // return response.json();
+    else {
+      return Alert.alert("the email you entered is not a valid agent email");
+    }
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Image
+          style={{ width: 250, height: 80, top: -110 }}
+          source={require("../assets/images/R2.png")}
+        />
+
+        <TextInput
+          value={this.state.email}
+          onChangeText={email => this.setState({ email })}
+          placeholder={"email"}
+          style={styles.input}
+        />
+
+        <Button
+          title={"Login"}
+          style={styles.input}
+          onPress={this.onLogin.bind(this)}
+        />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1"
+  },
+  input: {
+    width: 200,
+    height: 44,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 10
+  }
+});
