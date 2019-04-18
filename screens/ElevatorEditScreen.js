@@ -10,13 +10,17 @@ import {
   TouchableWithoutFeedback,
   TouchableHighlight
 } from "react-native";
+import { BackHandler } from "react-native";
 
 export default class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+
     this.state = {
       sizelogout: { height: 0, width: 0 },
       stylelog: "",
+      buttonleave: "",
       hidebutton: "",
       buttonColor: "red",
       title: "change status to Active",
@@ -25,7 +29,25 @@ export default class App extends React.Component {
       error: null
     };
   }
+  componentWillMount() {
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  }
 
+  componentWillUnmount() {
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.navigate("Elevator");
+
+    return true;
+  }
   PUTData = ev => {
     this.onButtonPress();
     var elevatorid = this.props.navigation.state.params.elevator.id;
@@ -50,8 +72,8 @@ export default class App extends React.Component {
   };
   onButtonPress = () => {
     this.setState({
-      sizelogout: { height: 20, width: 275, marginTop: 20 },
-
+      sizelogout: { height: 20, width: 275, marginTop: 20, marginBottom: 20 },
+      buttonleave: "Elevator list",
       hidebutton: "LOG OUT",
       buttonColor: "#008000",
       title: "Status is now Active"
@@ -65,7 +87,7 @@ export default class App extends React.Component {
           style={styles.rocketimages}
         />
         <Text style={{ fontSize: 24, fontWeight: "bold", top: 80 }}>
-          elevator id :{this.props.navigation.state.params.elevator.id}
+          Elevator id :{this.props.navigation.state.params.elevator.id}
         </Text>
         <View style={{ width: 275, marginTop: 90 }}>
           <Button
@@ -77,10 +99,9 @@ export default class App extends React.Component {
             value={this.state.isHidden}
           />
         </View>
-        <View style={{ width: 275, marginTop: 20 }}>
+        <View style={this.state.sizelogout}>
           <Button
-            style={styles.ButtonRedirect}
-            title="Elevator List"
+            title={this.state.buttonleave}
             onPress={() => this.props.navigation.navigate("Elevator")}
           />
         </View>

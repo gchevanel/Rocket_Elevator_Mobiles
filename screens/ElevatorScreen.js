@@ -10,10 +10,13 @@ import {
   TouchableWithoutFeedback,
   TouchableHighlight
 } from "react-native";
+import { BackHandler } from "react-native";
 
 export default class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+
     this.state = {
       data: null,
       loaded: true,
@@ -21,6 +24,25 @@ export default class App extends React.Component {
     };
   }
   baseURL = "https://rocketelevatorsgab.azurewebsites.net";
+
+  componentWillMount() {
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackButtonClick
+    );
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.navigate("Main");
+    return true;
+  }
 
   getData = ev => {
     this.setState({ loaded: false, error: null });
