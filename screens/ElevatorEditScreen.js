@@ -21,7 +21,6 @@ export default class App extends React.Component {
       sizelogout: { height: 0, width: 0 },
       stylelog: "",
       buttonleave: "",
-      hidebutton: "",
       buttonColor: "red",
       title: "change status to Active",
       data: null,
@@ -70,11 +69,11 @@ export default class App extends React.Component {
       }
     );
   };
+
   onButtonPress = () => {
     this.setState({
       sizelogout: { height: 20, width: 275, marginTop: 20, marginBottom: 20 },
       buttonleave: "Elevator list",
-      hidebutton: "LOG OUT",
       buttonColor: "#008000",
       title: "Status is now Active"
     });
@@ -103,13 +102,6 @@ export default class App extends React.Component {
           <Button
             title={this.state.buttonleave}
             onPress={() => this.props.navigation.navigate("Elevator")}
-          />
-        </View>
-
-        <View style={this.state.sizelogout}>
-          <Button
-            title={this.state.hidebutton}
-            onPress={() => this.props.navigation.navigate("Main")}
           />
         </View>
       </View>
